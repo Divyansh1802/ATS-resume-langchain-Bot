@@ -1,0 +1,122 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ATSResumeAnalysis",
+  "type": "object",
+  "required": ["ats_score", "keyword_analysis", "strengths", "weaknesses", "section_feedback", "bullet_rewrites", "formatting_issues", "meta"],
+  "properties": {
+
+    "ats_score": {
+      "type": "object",
+      "required": ["overall", "breakdown", "grade", "passing"],
+      "properties": {
+        "overall":  { "type": "integer", "minimum": 0, "maximum": 100 },
+        "grade":    { "type": "string",  "enum": ["A+","A","B+","B","C+","C","D","F"] },
+        "passing":  { "type": "boolean" },
+        "breakdown": {
+          "type": "object",
+          "required": ["keyword_match","formatting","section_completeness","quantification","readability"],
+          "properties": {
+            "keyword_match":        { "type": "integer", "minimum": 0, "maximum": 100 },
+            "formatting":           { "type": "integer", "minimum": 0, "maximum": 100 },
+            "section_completeness": { "type": "integer", "minimum": 0, "maximum": 100 },
+            "quantification":       { "type": "integer", "minimum": 0, "maximum": 100 },
+            "readability":          { "type": "integer", "minimum": 0, "maximum": 100 }
+          }
+        }
+      }
+    },
+
+    "keyword_analysis": {
+      "type": "object",
+      "required": ["matched","missing","overused","match_percentage"],
+      "properties": {
+        "matched":          { "type": "array",   "items": { "type": "string" } },
+        "missing":          { "type": "array",   "items": { "type": "string" } },
+        "overused":         { "type": "array",   "items": { "type": "string" } },
+        "match_percentage": { "type": "integer", "minimum": 0, "maximum": 100 }
+      }
+    },
+
+    "strengths": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["section","title","detail","impact"],
+        "properties": {
+          "section": { "type": "string" },
+          "title":   { "type": "string" },
+          "detail":  { "type": "string" },
+          "impact":  { "type": "string", "enum": ["high","medium","low"] }
+        }
+      }
+    },
+
+    "weaknesses": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["section","title","detail","severity","fix"],
+        "properties": {
+          "section":  { "type": "string" },
+          "title":    { "type": "string" },
+          "detail":   { "type": "string" },
+          "severity": { "type": "string", "enum": ["high","medium","low"] },
+          "fix":      { "type": "string" }
+        }
+      }
+    },
+
+    "section_feedback": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["section","present","score","suggestion"],
+        "properties": {
+          "section":    { "type": "string" },
+          "present":    { "type": "boolean" },
+          "score":      { "type": "integer", "minimum": 0, "maximum": 100 },
+          "suggestion": { "type": "string" }
+        }
+      }
+    },
+
+    "bullet_rewrites": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["original","rewritten","reason"],
+        "properties": {
+          "original":  { "type": "string" },
+          "rewritten": { "type": "string" },
+          "reason":    { "type": "string" }
+        }
+      }
+    },
+
+    "formatting_issues": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["issue","severity","fix"],
+        "properties": {
+          "issue":    { "type": "string" },
+          "severity": { "type": "string", "enum": ["high","medium","low"] },
+          "fix":      { "type": "string" }
+        }
+      }
+    },
+
+    "meta": {
+      "type": "object",
+      "required": ["word_count","page_count","file_name","analyzed_at","job_description_provided"],
+      "properties": {
+        "word_count":                { "type": "integer" },
+        "page_count":                { "type": "integer" },
+        "file_name":                 { "type": "string"  },
+        "analyzed_at":               { "type": "string", "format": "date-time" },
+        "job_description_provided":  { "type": "boolean" }
+      }
+    }
+
+  }
+}

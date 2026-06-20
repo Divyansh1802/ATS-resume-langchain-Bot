@@ -1,0 +1,10 @@
+fastapi
+uvicorn
+langchain-groq
+langchain-core
+python-dotenv
+pypdf
+python-docx
+striprtf
+jsonschema
+tenacity
